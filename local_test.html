@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LP Apple-like Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-AHmQG2bxi2FBa4CU+8h3iG+xxRBnZ1L9aVxw2W1eewB7xYH1dr6LxN3DmfQyq2Z4n1WqZc+PuH0gr5tG7sYfGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-q4KJ4N2/9WbK4+XGxNf0bJuwX9wS2Utsl9AOfUVCx9zv0qtMV5w6Qy1o2WFwxA2C9zEapNcxlLSEdR0EJ8oK2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    :root {
+      --bg: #050505;
+      --surface: #0D0F0E;
+      --border: #1A1F1C;
+      --text: #F5F7F6;
+      --muted: #B7C0BC;
+      --primary: #B8FF2C;
+      --secondary: #00E5FF;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    #lp-apple {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    #lp-apple img {
+      max-width: 100%;
+      display: block;
+    }
+
+    #lp-apple a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #lp-apple .lp-container {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: clamp(24px, 3vw, 48px);
+    }
+
+    #lp-apple .lp-section {
+      padding: clamp(56px, 9vw, 120px) 0;
+      border-top: 1px solid var(--border);
+      content-visibility: auto;
+      contain-intrinsic-size: 800px;
+    }
+
+    #lp-apple .lp-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    #lp-apple .lp-title {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 20px;
+      text-wrap: balance;
+    }
+
+    #lp-apple .lp-subtitle {
+      font-size: clamp(1rem, 2.4vw, 1.25rem);
+      max-width: 60ch;
+      color: var(--muted);
+      margin: 0 0 32px;
+    }
+
+    #lp-apple .lp-hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    #lp-apple .lp-hero-grid {
+      display: grid;
+      gap: clamp(24px, 5vw, 64px);
+    }
+
+    #lp-apple .lp-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    #lp-apple .lp-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--primary);
+      color: #08120a;
+      box-shadow: 0 16px 40px rgba(184, 255, 44, 0.2);
+    }
+
+    #lp-apple .lp-btn.lp-ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+      box-shadow: none;
+    }
+
+    #lp-apple .lp-hero-image {
+      border-radius: clamp(16px, 2vw, 28px);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #lp-apple .lp-proof-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    #lp-apple .lp-proof-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #lp-apple .lp-proof-value {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    #lp-apple .lp-bento-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    #lp-apple .lp-bento-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      min-height: 180px;
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+
+    #lp-apple .lp-bento-card p {
+      color: var(--muted);
+      margin: 12px 0 0;
+    }
+
+    #lp-apple .lp-scroll-stage {
+      display: grid;
+      gap: 24px;
+    }
+
+    #lp-apple .lp-scroll-sticky {
+      position: sticky;
+      top: clamp(16px, 8vw, 120px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #lp-apple .lp-scroll-copy {
+      display: grid;
+      gap: 20px;
+    }
+
+    #lp-apple .lp-step-grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    #lp-apple .lp-step-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #lp-apple .lp-faq {
+      display: grid;
+      gap: 16px;
+    }
+
+    #lp-apple .lp-accordion {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    #lp-apple .lp-accordion button {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      padding: 20px 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+    }
+
+    #lp-apple .lp-accordion button:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    #lp-apple .lp-accordion-content {
+      padding: 0 24px 20px;
+      color: var(--muted);
+      display: none;
+    }
+
+    #lp-apple .lp-cta-final {
+      text-align: center;
+    }
+
+    #lp-apple .lp-cta-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(140deg, rgba(184,255,44,0.12), rgba(255,255,255,0.02));
+      padding: clamp(32px, 6vw, 64px);
+    }
+
+    #lp-apple .lp-nav-glass {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5, 5, 5, 0.7);
+    }
+
+    @supports ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+      #lp-apple .lp-nav-glass {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background: rgba(5, 5, 5, 0.5);
+      }
+    }
+
+    @media (min-width: 768px) {
+      #lp-apple .lp-hero-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+      }
+
+      #lp-apple .lp-scroll-stage {
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: start;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      #lp-apple .lp-bento-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (hover: hover) {
+      #lp-apple .lp-btn:hover,
+      #lp-apple .lp-bento-card:hover {
+        transform: translateY(-2px) scale(1.01);
+      }
+    }
+
+    @media (hover: none) {
+      #lp-apple .lp-btn:hover,
+      #lp-apple .lp-bento-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="lp-apple">
+    <div class="lp-nav-glass">
+      <div class="lp-container" style="display:flex; justify-content: space-between; align-items:center; gap:16px;">
+        <strong>PulseFit</strong>
+        <a class="lp-btn lp-ghost" href="#cta">Assinar agora</a>
+      </div>
+    </div>
+
+    <section class="lp-section lp-hero" id="hero">
+      <div class="lp-container">
+        <div class="lp-hero-grid">
+          <div>
+            <p class="lp-eyebrow">Performance premium</p>
+            <h1 class="lp-title">TODO: Headline principal poderosa</h1>
+            <p class="lp-subtitle">TODO: Subheadline com benefício direto, tom Apple-like, até 2 linhas.</p>
+            <div class="lp-hero-actions">
+              <a class="lp-btn" href="#cta">TODO: CTA primário</a>
+              <a class="lp-btn lp-ghost" href="#beneficios">Ver benefícios</a>
+            </div>
+          </div>
+          <div class="lp-hero-image">
+            <!-- TODO: Hero 16:9 (mobile 750x420 / 2x 1500x840) | desktop 1200x675 / 2x 2400x1350 -->
+            <picture>
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=1200&q=80 1x, https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=2400&q=80 2x">
+              <img src="https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=750&q=80" srcset="https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=1500&q=80 2x" width="750" height="420" alt="Atleta treinando com intensidade" fetchpriority="high">
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="prova">
+      <div class="lp-container">
+        <p class="lp-eyebrow">Autoridade</p>
+        <h2 class="lp-title">TODO: Prova social que posiciona confiança</h2>
+        <p class="lp-subtitle">TODO: Frase curta reforçando resultados e segurança.</p>
+        <div class="lp-proof-grid">
+          <div class="lp-proof-card">
+            <div class="lp-proof-value">98%</div>
+            <p>TODO: taxa de satisfação</p>
+          </div>
+          <div class="lp-proof-card">
+            <div class="lp-proof-value">+35k</div>
+            <p>TODO: alunos ativos</p>
+          </div>
+          <div class="lp-proof-card">
+            <div class="lp-proof-value">4.9★</div>
+            <p>TODO: avaliação média</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="beneficios">
+      <div class="lp-container">
+        <p class="lp-eyebrow">Benefícios</p>
+        <h2 class="lp-title">TODO: O que muda no seu corpo e na sua rotina</h2>
+        <p class="lp-subtitle">TODO: Introdução curta dos benefícios principais.</p>
+        <div class="lp-bento-grid">
+          <div class="lp-bento-card">
+            <h3>TODO: Energia máxima</h3>
+            <p>TODO: Descrição do benefício com foco em performance.</p>
+          </div>
+          <div class="lp-bento-card">
+            <h3>TODO: Treino inteligente</h3>
+            <p>TODO: Descrição do benefício com foco em método.</p>
+          </div>
+          <div class="lp-bento-card">
+            <h3>TODO: Resultados visíveis</h3>
+            <p>TODO: Descrição do benefício com foco em transformação.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="story">
+      <div class="lp-container">
+        <p class="lp-eyebrow">Scrollytelling</p>
+        <h2 class="lp-title">TODO: Evolução guiada, passo a passo</h2>
+        <p class="lp-subtitle">TODO: Texto que prepara para a sequência sticky.</p>
+        <div class="lp-scroll-stage">
+          <div class="lp-scroll-copy">
+            <article class="lp-scroll-item">
+              <h3>TODO: Diagnóstico premium</h3>
+              <p>TODO: Explique o primeiro passo.</p>
+            </article>
+            <article class="lp-scroll-item">
+              <h3>TODO: Rotina alinhada ao seu ritmo</h3>
+              <p>TODO: Explique o segundo passo.</p>
+            </article>
+            <article class="lp-scroll-item">
+              <h3>TODO: Acompanhamento inteligente</h3>
+              <p>TODO: Explique o terceiro passo.</p>
+            </article>
+          </div>
+          <div class="lp-scroll-sticky">
+            <!-- TODO: Sticky 4:5 (mobile 640x800 / 2x 1280x1600) | desktop 720x900 / 2x 1440x1800 -->
+            <picture>
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=720&q=80 1x, https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1440&q=80 2x">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=640&q=80" srcset="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1280&q=80 2x" width="640" height="800" alt="Treino guiado no aplicativo" loading="lazy" decoding="async">
+            </picture>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="como-funciona">
+      <div class="lp-container">
+        <p class="lp-eyebrow">Como funciona</p>
+        <h2 class="lp-title">TODO: Uma rotina simples, com alto impacto</h2>
+        <p class="lp-subtitle">TODO: Explicação breve do fluxo.</p>
+        <div class="lp-step-grid">
+          <div class="lp-step-card">
+            <h3>1. TODO: Escolha</h3>
+            <p>TODO: Descreva o primeiro passo.</p>
+          </div>
+          <div class="lp-step-card">
+            <h3>2. TODO: Execute</h3>
+            <p>TODO: Descreva o segundo passo.</p>
+          </div>
+          <div class="lp-step-card">
+            <h3>3. TODO: Evolua</h3>
+            <p>TODO: Descreva o terceiro passo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="faq">
+      <div class="lp-container">
+        <p class="lp-eyebrow">FAQ</p>
+        <h2 class="lp-title">TODO: Dúvidas comuns antes de começar</h2>
+        <div class="lp-faq">
+          <div class="lp-accordion">
+            <button type="button" aria-expanded="false" aria-controls="faq-1">TODO: Preciso de equipamentos? <span aria-hidden="true">+</span></button>
+            <div class="lp-accordion-content" id="faq-1" role="region" aria-hidden="true">
+              TODO: Resposta curta e direta.
+            </div>
+          </div>
+          <div class="lp-accordion">
+            <button type="button" aria-expanded="false" aria-controls="faq-2">TODO: Quanto tempo por dia? <span aria-hidden="true">+</span></button>
+            <div class="lp-accordion-content" id="faq-2" role="region" aria-hidden="true">
+              TODO: Resposta curta e direta.
+            </div>
+          </div>
+          <div class="lp-accordion">
+            <button type="button" aria-expanded="false" aria-controls="faq-3">TODO: Posso cancelar quando quiser? <span aria-hidden="true">+</span></button>
+            <div class="lp-accordion-content" id="faq-3" role="region" aria-hidden="true">
+              TODO: Resposta curta e direta.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="cta">
+      <div class="lp-container lp-cta-final">
+        <div class="lp-cta-card">
+          <p class="lp-eyebrow">Pronto para começar?</p>
+          <h2 class="lp-title">TODO: CTA final forte</h2>
+          <p class="lp-subtitle">TODO: Último empurrão com benefício principal.</p>
+          <a class="lp-btn" href="#">TODO: Assinar agora</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const CONFIG = {
+      // TODO: Atualize URLs das imagens (mobile/desktop 1x/2x)
+      images: {
+        hero: {
+          mobile1x: "https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=750&q=80",
+          mobile2x: "https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=1500&q=80",
+          desktop1x: "https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=1200&q=80",
+          desktop2x: "https://images.unsplash.com/photo-1546484959-f8aa8f6f8b0c?auto=format&fit=crop&w=2400&q=80",
+        },
+        sticky: {
+          mobile1x: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=640&q=80",
+          mobile2x: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1280&q=80",
+          desktop1x: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=720&q=80",
+          desktop2x: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1440&q=80",
+        },
+      },
+      // TODO: Atualize links dos CTAs
+      ctas: {
+        primary: "#",
+        secondary: "#beneficios",
+      },
+      // TODO: Textos-chave
+      copy: {
+        heroTitle: "TODO: Headline principal poderosa",
+        heroSubtitle: "TODO: Subheadline com benefício direto, tom Apple-like, até 2 linhas.",
+        heroCta: "TODO: CTA primário",
+      },
+    };
+
+    document.querySelectorAll("#lp-apple .lp-btn").forEach((btn) => {
+      if (btn.textContent.includes("TODO")) return;
+      if (btn.classList.contains("lp-ghost")) {
+        btn.href = CONFIG.ctas.secondary;
+      } else {
+        btn.href = CONFIG.ctas.primary;
+      }
+    });
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lowEndDevice = navigator.connection?.saveData || (navigator.deviceMemory && navigator.deviceMemory <= 4);
+
+    if (!prefersReducedMotion && !lowEndDevice && window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.utils.toArray("#lp-apple .lp-section").forEach((section) => {
+        gsap.from(section.querySelectorAll("h2, h3, p, .lp-proof-card, .lp-bento-card, .lp-step-card"), {
+          opacity: 0,
+          y: 24,
+          stagger: 0.12,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+          },
+        });
+      });
+
+      gsap.utils.toArray("#lp-apple .lp-scroll-item").forEach((item, index) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0.3, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            scrollTrigger: {
+              trigger: item,
+              start: "top 70%",
+              end: "bottom 40%",
+              scrub: 0.9,
+            },
+          }
+        );
+      });
+
+      gsap.to("#lp-apple .lp-scroll-sticky img", {
+        scale: 1.05,
+        scrollTrigger: {
+          trigger: "#story",
+          start: "top 70%",
+          end: "bottom 30%",
+          scrub: 1,
+        },
+      });
+    }
+
+    document.querySelectorAll("#lp-apple .lp-accordion button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = button.parentElement.querySelector(".lp-accordion-content");
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        content.style.display = isExpanded ? "none" : "block";
+        content.setAttribute("aria-hidden", String(isExpanded));
+      });
+    });
+  </script>
+</body>
+</html>
